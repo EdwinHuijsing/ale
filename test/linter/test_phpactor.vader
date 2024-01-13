@@ -18,3 +18,15 @@ Execute(The project path should be correct for composer.json file):
   call ale#test#SetFilename('../test-files/php/with-composer/test.php')
 
   AssertLSPProject ale#path#Simplify(g:dir . '/../test-files/php/with-composer')
+
+Execute(The project path should be correct with valid mapped directories):
+  call ale#test#SetFilename('../test-files/php/with-git/test.php')
+  let g:ale_filename_mappings = {
+  \  'phpactor': [
+  \    [g:dir . '/../test-files/php/with-git', '/var/www' ],
+  \  ],
+  \}
+
+  silent! call mkdir('../test-files/php/with-git/.git')
+  AssertLSPProject '/var/www'
+
